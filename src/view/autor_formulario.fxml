@@ -11,9 +11,9 @@
    <children>
       <Label layoutX="85.0" layoutY="95.0" text="Nome:" />
       <Label layoutX="86.0" layoutY="135.0" text="Email:" />
-      <TextField layoutX="149.0" layoutY="90.0" />
-      <TextField layoutX="149.0" layoutY="130.0" />
-      <Button layoutX="534.0" layoutY="189.0" mnemonicParsing="false" text="Salvar" />
+      <TextField fx:id="txfNome" layoutX="149.0" layoutY="90.0" />
+      <TextField fx:id="txfEmail" layoutX="149.0" layoutY="130.0" />
+      <Button fx:id="btnSalvar" layoutX="534.0" layoutY="189.0" mnemonicParsing="false" onAction="#salvar" text="Salvar" />
       <Pane prefHeight="44.0" prefWidth="607.0" style="-fx-background-color: #0000A7;">
          <children>
             <Label layoutX="148.0" layoutY="2.0" text="Cadastro de Autores" textFill="WHITE">
