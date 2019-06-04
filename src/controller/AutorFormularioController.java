@@ -24,6 +24,8 @@ public class AutorFormularioController {
         mensagem.setHeaderText("Autor Cadastrado com sucesso");
         mensagem.setContentText("Autor: "+txfNome.getText()+"\nEmail: "+txfEmail.getText());
         mensagem.showAndWait();
+
+
         limparCampos();
 
     }
