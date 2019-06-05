@@ -94,7 +94,7 @@ public class LivroDAO {
             ResultSet rs = st.executeQuery(sql);
             rs.next();
 
-            Livro livro = new Livro;
+            Livro livro = new Livro();
 
             livro.setId(rs.getInt("id"));
             livro.setTitulo(rs.getString("titulo"));
