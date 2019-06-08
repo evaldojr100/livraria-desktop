@@ -1,6 +1,6 @@
 package dao;
 
-import com.mysql.cj.protocol.Resultset;
+
 import model.Autor;
 
 import java.sql.Connection;
