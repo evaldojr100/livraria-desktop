@@ -1,12 +1,12 @@
 package model;
 
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 public class Livro {
     private int id;
     private String titulo;
-    private Date data_lancamento;
+    private LocalDate data_lancamento;
     private int quantidade;
     private float preco;
     private Editora editora;
@@ -27,11 +27,11 @@ public class Livro {
         this.titulo = titulo;
     }
 
-    public Date getData_lancamento() {
+    public LocalDate getData_lancamento() {
         return data_lancamento;
     }
 
-    public void setData_lancamento(Date data_lancamento) {
+    public void setData_lancamento(LocalDate data_lancamento) {
         this.data_lancamento = data_lancamento;
     }
 

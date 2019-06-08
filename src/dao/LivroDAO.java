@@ -3,10 +3,8 @@ package dao;
 import com.mysql.cj.protocol.Resultset;
 import model.Livro;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
 
 public class LivroDAO {
     private Connection conexao;
@@ -22,7 +20,7 @@ public class LivroDAO {
             PreparedStatement st = conexao.prepareStatement(sql);
 
             st.setString(1,livro.getTitulo());
-            st.setDate(2,livro.getData_lancamento());
+            st.setDate(2, Date.valueOf(livro.getData_lancamento()));
             st.setInt(3,livro.getQuantidade());
             st.setFloat(4,livro.getPreco());
             st.setInt(5,livro.getEditora().getId());
@@ -46,7 +44,7 @@ public class LivroDAO {
             PreparedStatement st = conexao.prepareStatement(sql);
 
             st.setString(1,livro.getTitulo());
-            st.setDate(2,livro.getData_lancamento());
+            //st.setDate(2,livro.getData_lancamento());
             st.setInt(3,livro.getQuantidade());
             st.setFloat(4,livro.getPreco());
             st.setInt(5,livro.getEditora().getId());
@@ -98,7 +96,7 @@ public class LivroDAO {
 
             livro.setId(rs.getInt("id"));
             livro.setTitulo(rs.getString("titulo"));
-            livro.setData_lancamento(rs.getDate("data_lancamento"));
+           // livro.setData_lancamento(rs.getDate("data_lancamento"));
             livro.setQuantidade(rs.getInt("quantidade"));
             livro.setPreco(rs.getFloat("preco"));
             livro.setEditora(new EditoraDAO().buscar_id(rs.getInt("editora_id")));

@@ -105,13 +105,14 @@ public class EditoraDAO {
             result.next();
 
             Editora editora = new Editora();
-            Municipio municipio = new Municipio();
+            //Municipio municipio = new Municipio();
 
             editora.setId(result.getInt("id"));
             editora.setNome(result.getString("nome"));
             editora.setSite(result.getString("site"));
             editora.setBairro(result.getString("bairro"));
             editora.setEndereco(result.getString("endereco"));
+            editora.setTelefone(result.getString("telefone"));
             editora.setMunicipio(new MunicipioDAO().buscar_id(result.getInt("municipio_id")));
 
             return editora;

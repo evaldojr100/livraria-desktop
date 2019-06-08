@@ -82,7 +82,7 @@ public class EstadoDAO {
 
             st.setInt(1,id);
 
-            ResultSet rs = st.executeQuery(sql);
+            ResultSet rs = st.executeQuery();
             rs.next();
 
             Estado estado = new Estado();
@@ -92,10 +92,6 @@ public class EstadoDAO {
             rs.close();
             conexao.close();
             return estado;
-
-
-
-
 
         }catch(SQLException e){
             System.out.println(e);

@@ -5,6 +5,7 @@ import model.Municipio;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -80,20 +81,19 @@ public class MunicipioDAO {
     }
     public Municipio buscar_id(int id){
         conectar();
-
-        String sql = "select * from municipio where id = ?";
-
+        Municipio municipio =  new Municipio();
+        String sql = "select * from municipio  where id=?";
+        System.out.println(id);
         try{
-            PreparedStatement st = conexao.prepareStatement(sql);
 
+            PreparedStatement st = conexao.prepareStatement(sql);
             st.setInt(1,id);
 
-            ResultSet rs = st.executeQuery(sql);
+            ResultSet rs = st.executeQuery();
             rs.next();
-            Municipio municipio =  new Municipio();
             municipio.setId(rs.getInt("id"));
             municipio.setNome(rs.getString("nome"));
-            municipio.setEstado(new EstadoDAO().buscar_id(rs.getInt("estado_id")));
+            //municipio.setEstado(new EstadoDAO().buscar_id(rs.getInt("estado_id")));
 
             rs.close();
 
