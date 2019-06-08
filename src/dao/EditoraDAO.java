@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EditoraDAO {
     private Connection conexao;
@@ -121,6 +123,57 @@ public class EditoraDAO {
             System.out.println(e);
             throw new RuntimeException(e);
         }
+    }
+
+    public int proximo_id() {
+        Connection conexao = new ConnectionFactory().getConnection();
+
+        String sql = "show table status like 'editoras'";
+
+        try {
+            PreparedStatement st = conexao.prepareStatement(sql);
+
+            ResultSet rs = st.executeQuery();
+            rs.next();
+            return rs.getInt("auto_increment");
+        } catch (SQLException e) {
+            System.out.println(e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Editora> listarTodos(){
+        conectar();
+
+        String sql = "select * from autores";
+        List<Editora> editoras =  new ArrayList<>();
+
+        try {
+            //Preparar conexao
+            PreparedStatement stmt = conexao.prepareStatement(sql);
+
+            //Executar Conexão
+            ResultSet rs = stmt.executeQuery();
+
+            //Percorer resultados
+            while(rs.next()){
+                Editora editora = new Editora();
+                editora.setId(rs.getInt("id"));
+                editora.setTelefone(rs.getString("telefone"));
+                editora.setMunicipio(new MunicipioDAO().buscar_id(rs.getInt("municipio_id")));
+                editora.setEndereco(rs.getString("endereco"));
+                editora.setBairro(rs.getString("bairro"));
+                editora.setSite(rs.getString("site"));
+                editora.setNome(rs.getString("nome"));
+                editoras.add(editora);
+            }
+            //Encerrar conexão
+            conexao.close();
+
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+        return editoras;
     }
 
 }

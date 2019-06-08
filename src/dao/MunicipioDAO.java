@@ -1,6 +1,7 @@
 package dao;
 
 import model.Estado;
+
 import model.Municipio;
 
 import java.sql.Connection;
@@ -8,6 +9,9 @@ import java.sql.PreparedStatement;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MunicipioDAO {
     private Connection conexao;
@@ -104,5 +108,51 @@ public class MunicipioDAO {
             System.out.println(e);
             throw new RuntimeException(e);
         }
+    }
+    public int proximo_id() {
+        Connection conexao = new ConnectionFactory().getConnection();
+
+        String sql = "show table status like 'municipio'";
+
+        try {
+            PreparedStatement st = conexao.prepareStatement(sql);
+
+            ResultSet rs = st.executeQuery();
+            rs.next();
+            return rs.getInt("auto_increment");
+        } catch (SQLException e) {
+            System.out.println(e);
+            throw new RuntimeException(e);
+        }
+    }
+    public List<Municipio> listarTodos(){
+        conectar();
+
+        String sql = "select * from autores";
+        List<Municipio> municipios =  new ArrayList<>();
+
+        try {
+            //Preparar conexao
+            PreparedStatement stmt = conexao.prepareStatement(sql);
+
+            //Executar Conexão
+            ResultSet rs = stmt.executeQuery();
+
+            //Percorer resultados
+            while(rs.next()){
+                Municipio municipio = new Municipio();
+                municipio.setId(rs.getInt("id"));
+                municipio.setNome(rs.getString("nome"));
+                municipio.setEstado(new EstadoDAO().buscar_id(rs.getInt("estado_id")));
+                municipios.add(municipio);
+
+            }
+            //Encerrar conexão
+            conexao.close();
+
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+        return municipios;
     }
 }
