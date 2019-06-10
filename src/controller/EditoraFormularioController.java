@@ -1,10 +1,8 @@
 package controller;
 
 import dao.EditoraDAO;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
@@ -13,47 +11,47 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import model.Editora;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
-
+import javafx.scene.input.MouseEvent;
 
 public class EditoraFormularioController implements Initializable {
-    @FXML
-    private TableView<Editora> tabela_editoras;
-    @FXML
-    private TableColumn<Editora,String> tb_nome;
-    @FXML
-    private TableColumn<Editora,Integer> tb_id;
-    @FXML
-    private TableColumn<Editora,String> tb_site;
-    @FXML
-    private TableColumn<Editora,String> tb_endereco;
-    @FXML
-    private TableColumn<Editora,String> tb_bairro;
-    @FXML
-    private TableColumn<Editora,String> tb_telefone;
-    @FXML
-    private TableColumn<Editora,String> tb_municipio;
+    @FXML private TableView<Editora> tabela_editoras=new TableView<>();
+    @FXML private TableColumn<Editora,Integer> col_id = new TableColumn<>("id");
+    @FXML private TableColumn<Editora,String> col_nome = new TableColumn<>("nome");
+    @FXML private TableColumn<Editora,String> col_site = new TableColumn<>("site");
+    @FXML private TableColumn<Editora,String> col_telefone= new TableColumn<>("telefone");
 
-    private ObservableList<Editora> ObList;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        listar();
+    }
 
-        tabela_editoras=new TableView<>();
-        tb_id.setCellValueFactory(new PropertyValueFactory<>("id"));
-//        tb_nome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-//        tb_site.setCellValueFactory(new PropertyValueFactory<>("site"));
-//        tb_endereco.setCellValueFactory(new PropertyValueFactory<>("endereco"));
-//        tb_bairro.setCellValueFactory(new PropertyValueFactory<>("bairro"));
-//        tb_telefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
-//        tb_municipio.setCellValueFactory(new PropertyValueFactory<>("municipio"));
+    public void listar() {
+        try{
+            System.out.println("iniciou Pesquisa");
+            System.out.println(new EditoraDAO().listarTodos().size());
+            col_id.setCellValueFactory(new PropertyValueFactory<>("id"));
+            col_nome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+            col_site.setCellValueFactory(new PropertyValueFactory<>("site"));
+            col_telefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
+            tabela_editoras.setItems(new EditoraDAO().listarTodos());
 
-        List<Editora> lista = new EditoraDAO().listarTodos();
+            EventHandler<MouseEvent> clickListener = evt -> {
+                    System.out.println("Selecionado: " + tabela_editoras.getSelectionModel().getSelectedItem().getNome());
+            };
 
-        ObList = FXCollections.observableArrayList(lista);
-        tabela_editoras.setItems(ObList);
+            tabela_editoras.setOnMouseClicked(clickListener);
+
+        }catch (Exception e){
+            System.out.println(e);
+            throw new RuntimeException(e);
+
+        }
+        System.out.println("Finalizou a Pesquisa");
+
 
     }
+
 
 
 }

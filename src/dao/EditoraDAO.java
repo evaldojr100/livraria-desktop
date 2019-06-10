@@ -1,8 +1,8 @@
 package dao;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import model.Editora;
-import model.Municipio;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -142,10 +142,10 @@ public class EditoraDAO {
         }
     }
 
-    public List<Editora> listarTodos(){
+    public ObservableList listarTodos(){
         conectar();
 
-        String sql = "select * from autores";
+        String sql = "select id,nome,telefone,site from editoras";
         List<Editora> editoras =  new ArrayList<>();
 
         try {
@@ -160,9 +160,9 @@ public class EditoraDAO {
                 Editora editora = new Editora();
                 editora.setId(rs.getInt("id"));
                 editora.setTelefone(rs.getString("telefone"));
-                editora.setMunicipio(new MunicipioDAO().buscar_id(rs.getInt("municipio_id")));
-                editora.setEndereco(rs.getString("endereco"));
-                editora.setBairro(rs.getString("bairro"));
+                //editora.setMunicipio(new MunicipioDAO().buscar_id(rs.getInt("municipio_id")));
+                //editora.setEndereco(rs.getString("endereco"));
+                //editora.setBairro(rs.getString("bairro"));
                 editora.setSite(rs.getString("site"));
                 editora.setNome(rs.getString("nome"));
                 editoras.add(editora);
@@ -173,7 +173,10 @@ public class EditoraDAO {
         }catch (SQLException e){
             throw new RuntimeException(e);
         }
-        return editoras;
+         ObservableList retorno = FXCollections.observableArrayList(editoras);
+        return  retorno;
+
+
     }
 
 }

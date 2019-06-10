@@ -17,21 +17,18 @@
                   <Font name="AR DELANEY" size="53.0" />
                </font>
             </Label>
-            <Button layoutY="1.0" mnemonicParsing="false" text="Voltar" />
+            <Button layoutY="1.0" mnemonicParsing="false" onAction="#listar" text="Voltar" />
       </Pane>
       <Label layoutX="32.0" layoutY="97.0" text="ID:" />
       <TextField layoutX="56.0" layoutY="93.0" prefHeight="23.0" prefWidth="58.0" />
       <TextField layoutX="193.0" layoutY="95.0" />
       <Label layoutX="145.0" layoutY="97.0" text="Editora:" />
-      <TableView layoutX="27.0" layoutY="150.0" prefHeight="200.0" prefWidth="608.0">
+      <TableView fx:id="tabela_editoras" layoutX="27.0" layoutY="150.0" prefHeight="200.0" prefWidth="608.0">
         <columns>
-            <TableColumn id="tb_id" text="ID" />
-            <TableColumn id="tb_nome" text="Nome" />
-            <TableColumn id="tb_site" text="Site" />
-            <TableColumn id="tb_endereco" text="Endereço" />
-            <TableColumn id="tb_bairro" text="Bairro" />
-            <TableColumn id="tb_telefone" text="Telefone" />
-            <TableColumn id="tb_municipio" text="Municipio" />
+            <TableColumn fx:id="col_id" text="tb_id" />
+            <TableColumn fx:id="col_nome" text="tb_nome" />
+            <TableColumn fx:id="col_site" text="tb_site" />
+            <TableColumn fx:id="col_telefone" text="tb_telefone" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
