@@ -1,6 +1,8 @@
 package dao;
 
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import model.Autor;
 
 import java.sql.Connection;
@@ -38,7 +40,7 @@ public class AutorDAO {
             throw new RuntimeException(e);
         }
     }
-    public List<Autor> listarTodos(){
+    public ObservableList listarTodos(){
         conectar();
 
         String sql = "select * from autores";
@@ -65,8 +67,11 @@ public class AutorDAO {
         }catch (SQLException e){
             throw new RuntimeException(e);
         }
-        return autores;
+        ObservableList retorno = FXCollections.observableArrayList(autores);
+        return  retorno;
+
     }
+
     public void alterar(Autor autor){
         conectar();
 
@@ -115,15 +120,15 @@ public class AutorDAO {
 
 
     }
-    public Autor Busca_id(int id){
+    public Autor Busca_id(int id) {
         conectar();
 
-        String sql ="select * from autores where id=?";
+        String sql = "select * from autores where id=?";
 
         try {
             //preparar conexão
             PreparedStatement st = conexao.prepareStatement(sql);
-            st.setInt(1,id);
+            st.setInt(1, id);
 
             ResultSet rs = st.executeQuery();
             rs.next();
@@ -134,12 +139,28 @@ public class AutorDAO {
 
             conexao.close();
             return autor;
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
-}
+        public int proximo_id() {
+            Connection conexao = new ConnectionFactory().getConnection();
+
+            String sql = "show table status like 'autores'";
+
+            try {
+                PreparedStatement st = conexao.prepareStatement(sql);
+
+                ResultSet rs = st.executeQuery();
+                rs.next();
+                return rs.getInt("auto_increment");
+            } catch (SQLException e) {
+                System.out.println(e);
+               throw new RuntimeException(e);
+           }
+       }
+   }
+
 
 
 

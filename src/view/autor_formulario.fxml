@@ -2,19 +2,17 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="228.0" prefWidth="605.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AutorFormularioController">
+<AnchorPane prefHeight="412.0" prefWidth="639.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AutorFormularioController">
    <children>
-      <Label layoutX="85.0" layoutY="95.0" text="Nome:" />
-      <Label layoutX="86.0" layoutY="135.0" text="Email:" />
-      <TextField fx:id="txfNome" layoutX="149.0" layoutY="90.0" />
-      <TextField fx:id="txfEmail" layoutX="149.0" layoutY="130.0" />
-      <Button fx:id="btnSalvar" layoutX="534.0" layoutY="189.0" mnemonicParsing="false" onAction="#salvar" text="Salvar" />
-      <Pane prefHeight="44.0" prefWidth="607.0" style="-fx-background-color: #0000A7;">
+      <Pane prefHeight="44.0" prefWidth="639.0" style="-fx-background-color: #0000A7;">
          <children>
             <Label layoutX="148.0" layoutY="2.0" text="Cadastro de Autores" textFill="WHITE">
                <font>
@@ -23,5 +21,23 @@
             </Label>
          </children>
       </Pane>
+
+      <Label layoutX="127.0" layoutY="74.0" text="Nome:" />
+      <Label layoutX="345.0" layoutY="74.0" text="Email:" />
+      <TextField fx:id="txfId" layoutX="53.0" layoutY="70.0" prefHeight="25.0" prefWidth="50.0" />
+      <TextField fx:id="txfNome" layoutX="171.0" layoutY="70.0" />
+      <TextField fx:id="txfEmail" layoutX="386.0" layoutY="68.0" />
+      <Button fx:id="btnSalvar" layoutX="478.0" layoutY="120.0" mnemonicParsing="false" onAction="#salvar" text="Inserir Novo Autor" />
+      <Label layoutX="32.0" layoutY="74.0" text="ID:" />
+      <Separator layoutY="152.0" prefHeight="0.0" prefWidth="639.0" />
+      <TableView fx:id="tabela_autor" layoutX="11.0" layoutY="161.0" prefHeight="171.0" prefWidth="618.0">
+        <columns>
+          <TableColumn fx:id="tb_id" prefWidth="52.0" text="ID" />
+          <TableColumn fx:id="tb_nome" prefWidth="276.0" text="Nome do Autor" />
+          <TableColumn fx:id="tb_email" prefWidth="287.0" text="Email do Autor" />
+        </columns>
+      </TableView>
+      <Button layoutX="531.0" layoutY="363.0" mnemonicParsing="false" onAction="#deletar" text="Deletar Autor" />
+      <Button fx:id="btnBuscar" layoutX="549.0" layoutY="68.0" mnemonicParsing="false" text="Buscar" />
    </children>
 </AnchorPane>
