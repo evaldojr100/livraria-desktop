@@ -55,7 +55,7 @@
    <Label layoutX="436.0" layoutY="177.0" text="Telefone:" />
    <TextField fx:id="txt_telefone" layoutX="497.0" layoutY="173.0" />
    <Label layoutX="28.0" layoutY="177.0" text="Estado:" />
-   <ComboBox fx:id="cmb_estado" layoutX="84.0" layoutY="173.0" prefHeight="25.0" prefWidth="82.0" promptText="Escolha" />
+   <ComboBox fx:id="cb_estado" layoutX="84.0" layoutY="173.0" prefHeight="25.0" prefWidth="82.0" promptText="Escolha" />
    <Label layoutX="176.0" layoutY="177.0" text="Municipio:" />
    <ComboBox layoutX="241.0" layoutY="173.0" prefHeight="25.0" prefWidth="162.0" promptText="Escolha" />
 </AnchorPane>

@@ -121,7 +121,7 @@ public class EstadoDAO {
     public ObservableList listarTodos(){
         conectar();
 
-        String sql = "select * from autores";
+        String sql = "select * from estado";
         List<Estado> estados =  new ArrayList<>();
 
         try {
