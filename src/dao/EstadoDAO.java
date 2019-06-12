@@ -1,5 +1,7 @@
 package dao;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import model.Estado;
 
 import java.sql.Connection;
@@ -116,7 +118,7 @@ public class EstadoDAO {
             throw new RuntimeException(e);
         }
     }
-    public List<Estado> listarTodos(){
+    public ObservableList listarTodos(){
         conectar();
 
         String sql = "select * from autores";
@@ -142,6 +144,9 @@ public class EstadoDAO {
         }catch (SQLException e){
             throw new RuntimeException(e);
         }
-        return estados;
+        ObservableList retorno = FXCollections.observableArrayList(estados);
+        return  retorno;
+
+
     }
 }
