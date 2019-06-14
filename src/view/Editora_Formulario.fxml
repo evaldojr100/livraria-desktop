@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="531.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EditoraFormularioController">
+<AnchorPane prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EditoraFormularioController">
 
       <Pane layoutX="-1.0" prefHeight="71.0" prefWidth="754.0" style="-fx-background-color: #1E90FF;">
             <Label layoutX="76.0" layoutY="6.0" prefHeight="57.0" prefWidth="529.0" text="Controle de Editoras">
@@ -23,6 +23,12 @@
       <Label layoutX="57.0" layoutY="97.0" text="ID:" />
       <TextField fx:id="txt_id" layoutX="84.0" layoutY="93.0" prefHeight="23.0" prefWidth="58.0" />
       <TextField fx:id="txt_nome" layoutX="260.0" layoutY="93.0" />
+   <TextField fx:id="txt_site" layoutX="488.0" layoutY="93.0" />
+   <TextField fx:id="txt_endereco" layoutX="84.0" layoutY="135.0" prefHeight="25.0" prefWidth="362.0" />
+   <TextField fx:id="txt_bairro" layoutX="497.0" layoutY="135.0" />
+   <ComboBox fx:id="cb_estado" layoutX="84.0" layoutY="173.0" prefHeight="25.0" prefWidth="82.0" promptText="Escolha" />
+   <ComboBox fx:id="cb_municipio" layoutX="241.0" layoutY="173.0" prefHeight="25.0" prefWidth="162.0" promptText="Escolha" />
+   <TextField fx:id="txt_telefone" layoutX="497.0" layoutY="173.0" />
       <Label layoutX="176.0" layoutY="97.0" text="Nome Editora" />
       <TableView fx:id="tabela_editoras" layoutY="285.0" prefHeight="182.0" prefWidth="754.0">
         <columns>
@@ -42,20 +48,14 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Button layoutX="644.0" layoutY="234.0" mnemonicParsing="false" text="Novo Cadastro" />
-      <Button layoutX="638.0" layoutY="484.0" mnemonicParsing="false" text="Deletar Editora" />
+      <Button fx:id="btn_salvar" layoutX="644.0" layoutY="234.0" mnemonicParsing="false" onAction="#salvar" text="Novo Cadastro" />
+      <Button fx:id="btn_deletar" layoutX="638.0" layoutY="484.0" mnemonicParsing="false" onAction="#deletar" text="Deletar Editora" />
          <Button layoutX="21.0" layoutY="486.0" mnemonicParsing="false" onAction="#listar" text="Voltar" />
    <Separator layoutY="272.0" prefHeight="5.0" prefWidth="754.0" />
    <Label layoutX="460.0" layoutY="97.0" text="Site:" />
-   <TextField fx:id="txt_site" layoutX="488.0" layoutY="93.0" />
-   <TextField fx:id="txt_endereco" layoutX="84.0" layoutY="135.0" prefHeight="25.0" prefWidth="362.0" />
    <Label layoutX="21.0" layoutY="139.0" text="Endereço:" />
    <Label layoutX="457.0" layoutY="139.0" text="Bairro:" />
-   <TextField fx:id="txt_bairro" layoutX="497.0" layoutY="135.0" />
    <Label layoutX="436.0" layoutY="177.0" text="Telefone:" />
-   <TextField fx:id="txt_telefone" layoutX="497.0" layoutY="173.0" />
    <Label layoutX="28.0" layoutY="177.0" text="Estado:" />
-   <ComboBox fx:id="cb_estado" layoutX="84.0" layoutY="173.0" prefHeight="25.0" prefWidth="82.0" promptText="Escolha" />
    <Label layoutX="176.0" layoutY="177.0" text="Municipio:" />
-   <ComboBox layoutX="241.0" layoutY="173.0" prefHeight="25.0" prefWidth="162.0" promptText="Escolha" />
 </AnchorPane>

@@ -37,8 +37,6 @@ public class AutorFormularioController implements Initializable {
     @FXML private TextField txfNome;
     @FXML private TextField txfEmail;
     @FXML private TextField txfId;
-    @FXML private Button btnSalvar;
-    @FXML private Button btnBuscar;
     @FXML private TableView<Autor> tabela_autor = new TableView<>();
     @FXML private TableColumn<Autor,Integer> tb_id = new TableColumn<>("id");
     @FXML private TableColumn<Autor,String> tb_nome = new TableColumn<>("nome");
@@ -108,7 +106,9 @@ public class AutorFormularioController implements Initializable {
         mensagem.setHeaderText("Autor Deletado com sucesso");
         mensagem.setContentText("Autor: " + autor.getNome() + "\nEmail: " + autor.getEmail());
         mensagem.showAndWait();
+
         new AutorDAO().deletar(autor.getId());
+
         listar();
     }
     private void limparCampos() {

@@ -50,7 +50,7 @@ public class EditoraDAO {
     public void alterar(Editora editora){
         conectar();
 
-        String sql = "update editoras set nome = ?, site = ?, endereco = ?, bairo=?, telefone =?, municipio_id=? where id=?";
+        String sql = "update editoras set nome = ?, site = ?, endereco = ?, bairro=?, telefone =?, municipio_id=? where id=?";
 
         try {
             PreparedStatement st = conexao.prepareStatement(sql);

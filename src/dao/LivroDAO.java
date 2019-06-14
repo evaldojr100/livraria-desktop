@@ -1,6 +1,8 @@
 package dao;
 
 import com.mysql.cj.protocol.Resultset;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import model.Autor;
 import model.Livro;
 
@@ -50,7 +52,7 @@ public class LivroDAO {
             PreparedStatement st = conexao.prepareStatement(sql);
 
             st.setString(1, livro.getTitulo());
-            //st.setDate(2,livro.getData_lancamento());
+            st.setDate(2,Date.valueOf(livro.getData_lancamento()));
             st.setInt(3, livro.getQuantidade());
             st.setFloat(4, livro.getPreco());
             st.setInt(5, livro.getEditora().getId());
@@ -136,7 +138,7 @@ public class LivroDAO {
         }
     }
 
-    public List<Livro> listarTodos(){
+    public ObservableList<Livro> listarTodos(){
         conectar();
 
         String sql = "select * from autores";
@@ -162,11 +164,13 @@ public class LivroDAO {
             }
             //Encerrar conexão
             conexao.close();
+            ObservableList retorno = FXCollections.observableArrayList(livros);
+            return  retorno;
 
         }catch (SQLException e){
             throw new RuntimeException(e);
         }
-        return livros;
+
     }
 
 }

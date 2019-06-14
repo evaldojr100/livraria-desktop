@@ -1,5 +1,7 @@
 package dao;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import model.Estado;
 
 import model.Municipio;
@@ -154,5 +156,37 @@ public class MunicipioDAO {
             throw new RuntimeException(e);
         }
         return municipios;
+    }
+    public ObservableList<Municipio> listarEstado (Estado estado){
+        conectar();
+
+        String sql = "select * from municipio where estado_id=? group by id";
+
+        List<Municipio> municipios = new ArrayList<>();
+        try{
+            PreparedStatement st = conexao.prepareStatement(sql);
+            st.setInt(1,estado.getId());
+
+
+            ResultSet rs = st.executeQuery();
+
+            while(rs.next()){
+                Municipio municipio = new Municipio();
+                municipio.setId(rs.getInt("id"));
+                municipio.setNome(rs.getString("nome"));
+                municipios.add(municipio);
+            }
+            rs.close();
+
+            conexao.close();
+
+            ObservableList retorno = FXCollections.observableArrayList(municipios);
+            return  retorno;
+
+        }catch (SQLException e){
+            System.out.println(e);
+            throw new RuntimeException(e);
+        }
+
     }
 }
