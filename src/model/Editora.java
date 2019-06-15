@@ -8,6 +8,15 @@ public class Editora {
     private String bairro;
     private String telefone;
     private Municipio municipio;
+    private Estado estado;
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
 
     public int getId() {
         return id;

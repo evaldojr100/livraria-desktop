@@ -77,7 +77,7 @@ public class AutorFormularioController implements Initializable {
     }
     public void listar(){
         try{
-            System.out.println("Iniciando listar Autores");
+            System.out.println("Iniciando listar_livros Autores");
             System.out.println("Itens Buscados:"+new AutorDAO().listarTodos().size());
             tb_id.setCellValueFactory(new PropertyValueFactory<>("id"));
             tb_nome.setCellValueFactory(new PropertyValueFactory<>("nome"));

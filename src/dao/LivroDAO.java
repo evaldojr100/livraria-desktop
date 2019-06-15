@@ -141,7 +141,7 @@ public class LivroDAO {
     public ObservableList<Livro> listarTodos(){
         conectar();
 
-        String sql = "select * from autores";
+        String sql = "select * from livros  ";
         List<Livro> livros =  new ArrayList<>();
 
         try {
@@ -157,8 +157,8 @@ public class LivroDAO {
                 livro.setId(rs.getInt("id"));
                 livro.setTitulo((rs.getString("titulo")));
                 livro.setQuantidade(rs.getInt("quantidade"));
-                livro.setData_lancamento(LocalDate.parse(rs.getDate("data_lancamento").toString()));
-                livro.setEditora(new EditoraDAO().buscar_id(rs.getInt("editora_id)")));
+                livro.setData_lancamento(LocalDate.parse(rs.getString("data_lancamento")));
+                livro.setEditora(new EditoraDAO().buscar_id(rs.getInt("editora_id")));
                 livro.setPreco(rs.getFloat("preco"));
                 livros.add(livro);
             }
@@ -168,6 +168,7 @@ public class LivroDAO {
             return  retorno;
 
         }catch (SQLException e){
+            System.out.println(e);
             throw new RuntimeException(e);
         }
 

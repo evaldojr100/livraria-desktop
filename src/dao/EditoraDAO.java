@@ -148,7 +148,8 @@ public class EditoraDAO {
     public ObservableList listarTodos(){
         conectar();
 
-        String sql = "select * from editoras";
+        String sql = "select editoras.*,municipio.estado_id from editoras join municipio on municipio.id=editoras.municipio_id";
+
 
         List<Editora> editoras =  new ArrayList<>();
 
@@ -169,6 +170,7 @@ public class EditoraDAO {
                 editora.setBairro(rs.getString("bairro"));
                 editora.setSite(rs.getString("site"));
                 editora.setNome(rs.getString("nome"));
+                editora.setEstado(new EstadoDAO().buscar_id(rs.getInt("estado_id")));
 
                 editoras.add(editora);
             }

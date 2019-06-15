@@ -31,8 +31,8 @@ public class EditoraFormularioController implements Initializable {
     @FXML private TableColumn<Editora, String> tb_telefone = new TableColumn<>("telefone");
     @FXML private TableColumn<Editora, String> tb_endereco = new TableColumn<>("endereco");
     @FXML private TableColumn<Editora, String> tb_bairro = new TableColumn<>("bairro");
-    @FXML private TableColumn<Editora, Municipio> tb_municipio = new TableColumn<>("municipio_id");
-    @FXML private TableColumn<Editora,Estado> tb_estado =  new TableColumn<>("uf");
+    @FXML private TableColumn<Editora, String> tb_municipio = new TableColumn<>("municipio_id");
+    @FXML private TableColumn<Editora, String> tb_estado =  new TableColumn<>("estado_id");
 
     // Text Field's
     @FXML private TextField txt_id;
@@ -121,6 +121,8 @@ public class EditoraFormularioController implements Initializable {
             tb_telefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
             tb_endereco.setCellValueFactory(new PropertyValueFactory<>("endereco"));
             tb_bairro.setCellValueFactory(new PropertyValueFactory<>("bairro"));
+            tb_municipio.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getMunicipio().getNome()));
+            tb_estado.setCellValueFactory((param)-> new SimpleStringProperty(param.getValue().getEstado().getUf()));
 
 
             tabela_editoras.setItems(new EditoraDAO().listarTodos());
