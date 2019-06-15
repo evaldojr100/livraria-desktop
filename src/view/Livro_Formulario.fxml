@@ -9,12 +9,17 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="600.0" prefWidth="910.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LivroFormularioController">
 
-    <Pane layoutX="-1.0" prefHeight="71.0" prefWidth="754.0" style="-fx-background-color: #1E90FF;">
+    <Pane layoutX="-1.0" prefHeight="71.0" prefWidth="910.0" style="-fx-background-color: #1E90FF;">
       <children>
-         <Label layoutX="349.0" layoutY="27.0" text="Controle de Livros" />
+         <Label layoutX="152.0" text="Controle de Livros">
+            <font>
+               <Font name="AR DELANEY" size="63.0" />
+            </font>
+         </Label>
       </children></Pane>
     <Label layoutX="57.0" layoutY="97.0" text="ID:" />
     <Label layoutX="157.0" layoutY="97.0" text="Titulo do Livro" />
@@ -42,9 +47,9 @@
    <TextField fx:id="txt_preco" layoutX="285.0" layoutY="135.0" prefHeight="25.0" prefWidth="130.0" />
    <TextField fx:id="txt_quantidade" layoutX="506.0" layoutY="135.0" prefHeight="25.0" prefWidth="77.0" />
    <ComboBox fx:id="cb_editoras" layoutX="678.0" layoutY="135.0" prefWidth="150.0" />
-   <TableView layoutX="722.0" layoutY="252.0" prefHeight="227.0" prefWidth="143.0">
+   <TableView fx:id="tabela_autores" layoutX="722.0" layoutY="252.0" prefHeight="227.0" prefWidth="143.0">
      <columns>
-       <TableColumn fx:id="tb_autores" prefWidth="142.0" text="Autores" />
+       <TableColumn fx:id="tb_autor" prefWidth="142.0" text="Autores" />
      </columns>
    </TableView>
 </AnchorPane>

@@ -174,4 +174,30 @@ public class LivroDAO {
 
     }
 
+    public ObservableList<Autor> ListarAutores(Livro livro){
+        conectar();
+
+        String sql = "select autor_id from livro_autor where livro_id=?";
+
+        List<Autor> autores =  new ArrayList<>();
+
+        try{
+            PreparedStatement st = conexao.prepareStatement(sql);
+            st.setInt(1,livro.getId());
+
+            ResultSet rs = st.executeQuery();
+            while(rs.next()){
+                Autor autor = new AutorDAO().Busca_id(rs.getInt("autor_id"));
+                autores.add(autor);
+            }
+
+            ObservableList retorno = FXCollections.observableArrayList(autores);
+            return  retorno;
+
+        }catch(SQLException e){
+            System.out.println(e);
+            throw new RuntimeException(e);
+        }
+    }
+
 }

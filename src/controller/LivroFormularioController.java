@@ -22,41 +22,33 @@ import javafx.scene.input.MouseEvent;
 public class LivroFormularioController implements Initializable {
 
     //Text Fields
-    @FXML
-    private TextField txt_id;
-    @FXML
-    private TextField txt_titulo;
-    @FXML
-    private TextField txt_preco;
-    @FXML
-    private TextField txt_quantidade;
-    @FXML
-    private TextField txt_data_lancamento;
+    @FXML private TextField txt_id;
+    @FXML private TextField txt_titulo;
+    @FXML private TextField txt_preco;
+    @FXML private TextField txt_quantidade;
+    @FXML private TextField txt_data_lancamento;
 
     //Combo Boxes
-    @FXML
-    private ComboBox cb_editoras;
+    @FXML private ComboBox cb_editoras;
 
-    //Inicialização atributos da Tabela
-    @FXML
-    TableView tabela_livros = new TableView();
-    @FXML
-    TableColumn<Livro, Integer> tb_id = new TableColumn<>("id");
-    @FXML
-    TableColumn<Livro, String> tb_titulo = new TableColumn<>("titulo");
-    @FXML
-    TableColumn<Livro, Float> tb_preco = new TableColumn<>("preco");
-    @FXML
-    TableColumn<Livro, Integer> tb_quantidade = new TableColumn<>("quantidade");
-    @FXML
-    TableColumn<Livro, String> tb_data_lancamento = new TableColumn<>("data_lancamento");
-    @FXML
-    TableColumn<Livro, String> tb_editora = new TableColumn<>("editora_id");
+    //Inicialização atributos da Tabela Livros
+    @FXML TableView tabela_livros = new TableView();
+    @FXML TableColumn<Livro, Integer> tb_id = new TableColumn<>("id");
+    @FXML TableColumn<Livro, String> tb_titulo = new TableColumn<>("titulo");
+    @FXML TableColumn<Livro, Float> tb_preco = new TableColumn<>("preco");
+    @FXML TableColumn<Livro, Integer> tb_quantidade = new TableColumn<>("quantidade");
+    @FXML TableColumn<Livro, String> tb_data_lancamento = new TableColumn<>("data_lancamento");
+    @FXML TableColumn<Livro, String> tb_editora = new TableColumn<>("editora_id");
+
+    //Inicialização atributos da Tabela autores
+    @FXML TableView tabela_autores = new TableView();
+    @FXML TableColumn<Autor,String> tb_autor  = new TableColumn<>("autor_id");
 
     //Instanciação de Objetos
     Livro livro = new Livro();
     LivroDAO livroDao = new LivroDAO();
     Editora editora = new Editora();
+    Autor autor = new Autor();
 
 
     @Override
@@ -116,11 +108,33 @@ public class LivroFormularioController implements Initializable {
 
         System.out.println("Encerrou a Pesquisa Livros");
     }
+    public void listar_autores(Livro livro){
+        if(livro != null){
+            System.out.println("Iniciando Pesquisa de autores");
+            System.out.println("Resultado da Pesquisa: "+new LivroDAO().ListarAutores(livro).size());
+            try{
+                tb_autor.setCellValueFactory(new PropertyValueFactory<>("nome"));
+                tabela_autores.setItems(new LivroDAO().ListarAutores(livro));
 
+                tabela_autores.setOnMouseClicked(autorSelecionado);
+
+            }catch (Exception e){
+                System.out.println(e);
+                throw new RuntimeException(e);
+            }
+        }
+
+    }
+    //Evento do Mouse para Selecionar Autor na tabela autores
+    EventHandler<MouseEvent> autorSelecionado = evt -> {
+        autor = (Autor) tabela_autores.getSelectionModel().getSelectedItem();
+        System.out.println("Selecionado: " + ((Autor) tabela_autores.getSelectionModel().getSelectedItem()).getNome());
+    };
     //Evento do Mouse para selecionar Livro na tabela
     EventHandler<MouseEvent> livroSelecionado = evt -> {
         livro = (Livro) tabela_livros.getSelectionModel().getSelectedItem();
         System.out.println("Selecionado: " + ((Livro) tabela_livros.getSelectionModel().getSelectedItem()).getTitulo());
+        listar_autores(livro);
     };
     //Evento que com o Clique do mouse abra a lista de Editoras
     EventHandler<MouseEvent> cb_editora_clicked = evt -> {
@@ -160,14 +174,13 @@ public class LivroFormularioController implements Initializable {
 
         livroDao.inserir(livro);
         txt_id.setText(Integer.toString(livroDao.proximo_id()));
-        limpar_campos();
 
         Alert mensagem = new Alert(Alert.AlertType.INFORMATION);
         mensagem.setTitle("Cadastro de Livros");
         mensagem.setHeaderText("Livro Cadastrado com sucesso");
         mensagem.setContentText("Livro: " + txt_titulo.getText());
         mensagem.showAndWait();
-
+        limpar_campos();
         listar_livros();
     }
 
