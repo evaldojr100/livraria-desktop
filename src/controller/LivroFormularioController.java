@@ -12,7 +12,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import model.*;
-
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -67,13 +66,13 @@ public class LivroFormularioController implements Initializable {
 
     }
 
+
     public void popular_editoras() {
         cb_editoras.cellFactoryProperty();
         cb_editoras.setOnMouseClicked(cb_editora_clicked);
         cb_editoras.setCellFactory(cb_editora_format);
         cb_editoras.setOnAction(mudar_cb_editora);
     }
-
     public void limpar_campos(){
         txt_titulo.setText("");
         txt_data_lancamento.setText("");
@@ -165,24 +164,29 @@ public class LivroFormularioController implements Initializable {
 
     // ao apertar no botão novo cadastro insere um novo item
     public void salvar() {
-        Livro livro = new Livro();
-        livro.setTitulo(txt_titulo.getText());
-        livro.setPreco(Float.valueOf(txt_preco.getText()));
-        livro.setQuantidade(Integer.valueOf(txt_quantidade.getText()));
-        livro.setData_lancamento(LocalDate.parse(txt_data_lancamento.getText()));
-        livro.setEditora(editora);
 
-        livroDao.inserir(livro);
-        txt_id.setText(Integer.toString(livroDao.proximo_id()));
+            Livro livro = new Livro();
 
-        Alert mensagem = new Alert(Alert.AlertType.INFORMATION);
-        mensagem.setTitle("Cadastro de Livros");
-        mensagem.setHeaderText("Livro Cadastrado com sucesso");
-        mensagem.setContentText("Livro: " + txt_titulo.getText());
-        mensagem.showAndWait();
-        limpar_campos();
-        listar_livros();
-    }
+            livro.setTitulo(txt_titulo.getText());
+            livro.setPreco(Float.valueOf(txt_preco.getText()));
+            livro.setQuantidade(Integer.valueOf(txt_quantidade.getText()));
+            DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            livro.setData_lancamento(LocalDate.parse(txt_data_lancamento.getText(),formatador));
+            System.out.println();
+            livro.setEditora(editora);
+
+            livroDao.inserir(livro);
+            txt_id.setText(Integer.toString(livroDao.proximo_id()));
+
+            Alert mensagem = new Alert(Alert.AlertType.INFORMATION);
+            mensagem.setTitle("Cadastro de Livros");
+            mensagem.setHeaderText("Livro Cadastrado com sucesso");
+            mensagem.setContentText("Livro: " + txt_titulo.getText());
+            mensagem.showAndWait();
+            limpar_campos();
+            listar_livros();
+
+        }
 
     public void deletar() {
         livroDao.deletar(livro.getId());
@@ -192,7 +196,6 @@ public class LivroFormularioController implements Initializable {
         mensagem.showAndWait();
         listar_livros();
     }
-
 
     private Callback<ListView<Editora>, ListCell<Editora>> cb_editora_format = evt ->{
         return new ListCell<>() {
