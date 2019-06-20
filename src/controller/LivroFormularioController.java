@@ -2,17 +2,24 @@ package controller;
 
 import dao.EditoraDAO;
 import dao.LivroDAO;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.ComboBoxListCell;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
+import javafx.util.converter.FloatStringConverter;
+import javafx.util.converter.IntegerStringConverter;
 import model.*;
 import java.net.URL;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
@@ -26,6 +33,8 @@ public class LivroFormularioController implements Initializable {
     @FXML private TextField txt_preco;
     @FXML private TextField txt_quantidade;
     @FXML private TextField txt_data_lancamento;
+
+
 
     //Combo Boxes
     @FXML private ComboBox cb_editoras;
@@ -63,10 +72,17 @@ public class LivroFormularioController implements Initializable {
         System.out.println("Proximo item para ser implementado na tabela:" + livroDao.proximo_id());
         listar_livros();
         popular_editoras();
+        tabela_livros.setEditable(true);
+
+        tb_titulo.setCellFactory(TextFieldTableCell.forTableColumn());
+        tb_preco.setCellFactory(TextFieldTableCell.forTableColumn(new FloatStringConverter()));
+        tb_quantidade.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        tb_data_lancamento.setCellFactory(TextFieldTableCell.forTableColumn());
+        tb_editora.setCellFactory(ComboBoxTableCell.forTableColumn(new EditoraDAO().listarTodos()));
+
+
 
     }
-
-
     public void popular_editoras() {
         cb_editoras.cellFactoryProperty();
         cb_editoras.setOnMouseClicked(cb_editora_clicked);
@@ -89,9 +105,9 @@ public class LivroFormularioController implements Initializable {
             tb_titulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
             tb_preco.setCellValueFactory(new PropertyValueFactory<>("preco"));
             tb_quantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
-            tb_data_lancamento.setCellValueFactory((param) ->
-                    new SimpleStringProperty(param.getValue().getData_lancamento().format(DateTimeFormatter.ofPattern("dd-MMM-yy"))));
+            tb_data_lancamento.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getData_lancamento().format(DateTimeFormatter.ofPattern("dd-MM-yy"))));
             tb_editora.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getEditora().getNome()));
+
 
             // fazendo a busca no banco de dados para a tabela
             tabela_livros.setItems(livroDao.listarTodos());
@@ -211,4 +227,27 @@ public class LivroFormularioController implements Initializable {
         };
 
     };
+
+    public void alteraTitulo(TableColumn.CellEditEvent<Livro,String> livroStringCellEditEvent){
+        livro.setTitulo(livroStringCellEditEvent.getNewValue());
+        livroDao.alterar(livro);
+        listar_livros();
+    }
+    public void alteraPreco(TableColumn.CellEditEvent<Livro, Float> livroFloatCellEditEvent) {
+        livro.setPreco(livroFloatCellEditEvent.getNewValue());
+        livroDao.alterar(livro);
+        listar_livros();
+    }
+    public void alteraQuantidade(TableColumn.CellEditEvent<Livro,Integer>livroIntegerCellEditEvent){
+        livro.setQuantidade(livroIntegerCellEditEvent.getNewValue());
+        livroDao.alterar(livro);
+        listar_livros();
+    }
+    public void alteraData(TableColumn.CellEditEvent<Livro, String> livroStringCellEditEvent) {
+        livro.setData_lancamento(LocalDate.parse(livroStringCellEditEvent.getNewValue()));
+        livroDao.alterar(livro);
+        listar_livros();
+    }
+    public void alteraEditora(TableColumn.CellEditEvent<Livro, String> livroStringCellEditEvent) {
+    }
 }

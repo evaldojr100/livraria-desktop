@@ -67,7 +67,10 @@ public class EditoraFormularioController implements Initializable {
         popular_estado();
         popular_municipio();
         tabela_editoras.setEditable(true);
+        alterar_tabela();
 
+    }
+    public void alterar_tabela(){
         tb_nome.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getNome()) );
         tb_nome.setCellFactory(TextFieldTableCell.forTableColumn());
         tb_nome.setOnEditCommit(alteraNome);
@@ -87,12 +90,6 @@ public class EditoraFormularioController implements Initializable {
         tb_telefone.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getTelefone()) );
         tb_telefone.setCellFactory(TextFieldTableCell.forTableColumn());
         tb_telefone.setOnEditCommit(alteraTelefone);
-
-
-
-
-
-
     }
 
     public void popular_estado() {
@@ -109,7 +106,6 @@ public class EditoraFormularioController implements Initializable {
         cb_municipio.setOnAction(mudar_cb_municipio);
 
     }
-
 
     public void listar() {
         try {

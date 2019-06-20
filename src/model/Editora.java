@@ -10,6 +10,11 @@ public class Editora {
     private Municipio municipio;
     private Estado estado;
 
+    @Override
+    public String toString() {
+        return nome;
+    }
+
     public Estado getEstado() {
         return estado;
     }
