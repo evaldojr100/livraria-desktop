@@ -11,6 +11,12 @@ public class Livro {
     private float preco;
     private Editora editora;
 
+    @Override
+    public String toString() {
+        return titulo;
+    }
+
+
     public int getId() {
         return id;
     }

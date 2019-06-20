@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.StringConverter;
@@ -67,42 +68,31 @@ public class EditoraFormularioController implements Initializable {
         popular_estado();
         popular_municipio();
         tabela_editoras.setEditable(true);
-        alterar_tabela();
+        config_edit_tabela();
+
 
     }
-    public void alterar_tabela(){
-        tb_nome.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getNome()) );
+    private void config_edit_tabela(){
         tb_nome.setCellFactory(TextFieldTableCell.forTableColumn());
-        tb_nome.setOnEditCommit(alteraNome);
-
-        tb_site.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getSite()) );
         tb_site.setCellFactory(TextFieldTableCell.forTableColumn());
-        tb_site.setOnEditCommit(alteraSite);
-
-        tb_bairro.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getBairro()) );
-        tb_bairro.setCellFactory(TextFieldTableCell.forTableColumn());
-        tb_bairro.setOnEditCommit(alteraBairro);
-
-        tb_endereco.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getEndereco()) );
         tb_endereco.setCellFactory(TextFieldTableCell.forTableColumn());
-        tb_endereco.setOnEditCommit(alteraEndereco);
-
-        tb_telefone.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getTelefone()) );
+        tb_bairro.setCellFactory(TextFieldTableCell.forTableColumn());
         tb_telefone.setCellFactory(TextFieldTableCell.forTableColumn());
-        tb_telefone.setOnEditCommit(alteraTelefone);
-    }
+        tb_municipio.setCellFactory(ComboBoxTableCell.forTableColumn(new MunicipioDAO().listarEstado(estado)));
+        tb_estado.setCellFactory(ComboBoxTableCell.forTableColumn(new EstadoDAO().listarTodos()));
 
+    }
     public void popular_estado() {
         cb_estado.cellFactoryProperty();
         cb_estado.setOnMouseClicked(cb_estado_clicked);
-        cb_estado.setCellFactory(cb_estado_format);
+
         cb_estado.setOnAction(mudar_cb_estado);
     }
 
     public void popular_municipio(){
         cb_municipio.cellFactoryProperty();
         cb_municipio.setOnMouseClicked(cb_municipio_clicked);
-        cb_municipio.setCellFactory(cb_municipio_format);
+
         cb_municipio.setOnAction(mudar_cb_municipio);
 
     }
@@ -140,6 +130,8 @@ public class EditoraFormularioController implements Initializable {
     EventHandler<MouseEvent> editoraSelecionada = evt -> {
 
         editora = tabela_editoras.getSelectionModel().getSelectedItem();
+        estado=editora.getEstado();
+        municipio=editora.getMunicipio();
         System.out.println("Selecionado: " + tabela_editoras.getSelectionModel().getSelectedItem().getNome());
     };
     //Ao clicar no Combo Box do estado puxa a lista
@@ -196,63 +188,6 @@ public class EditoraFormularioController implements Initializable {
                 System.out.println("Municipio Selecionado:"+municipio.getNome());
     };
 
-    //-------------------- Alterar ----------------------------
-
-    //Alterar Nome
-    private EventHandler<TableColumn.CellEditEvent<Editora, String> > alteraNome = evt -> {
-        (evt.getTableView().getItems().get(evt.getTablePosition().getRow())).setNome(evt.getNewValue());
-        editoraDao.alterar( (evt.getTableView().getItems().get(evt.getTablePosition().getRow())));
-        listar();
-    };
-    //Altera Site
-    private EventHandler<TableColumn.CellEditEvent<Editora, String> > alteraSite = evt -> {
-        (evt.getTableView().getItems().get(evt.getTablePosition().getRow())).setSite(evt.getNewValue());
-        editoraDao.alterar((evt.getTableView().getItems().get(evt.getTablePosition().getRow())));
-    };
-    //Altera Telefone
-    private EventHandler<TableColumn.CellEditEvent<Editora, String> > alteraTelefone = evt -> {
-        (evt.getTableView().getItems().get(evt.getTablePosition().getRow())).setTelefone(evt.getNewValue());
-        editoraDao.alterar( (evt.getTableView().getItems().get(evt.getTablePosition().getRow())));
-    };
-    //Altera Bairro
-    private EventHandler<TableColumn.CellEditEvent<Editora, String> > alteraBairro = evt -> {
-        (evt.getTableView().getItems().get(evt.getTablePosition().getRow())).setBairro(evt.getNewValue());
-        editoraDao.alterar((evt.getTableView().getItems().get(evt.getTablePosition().getRow())));
-    };
-    //Altera Endereço
-    private EventHandler<TableColumn.CellEditEvent<Editora, String> > alteraEndereco = evt -> {
-        (evt.getTableView().getItems().get(evt.getTablePosition().getRow())).setEndereco(evt.getNewValue());
-        editoraDao.alterar( (evt.getTableView().getItems().get(evt.getTablePosition().getRow())));
-    };
-
-    private Callback<ListView<Estado>, ListCell<Estado>> cb_estado_format = evt ->{
-        return new ListCell<Estado>() {
-            @Override
-            protected void updateItem(Estado item, boolean empty) {
-                super.updateItem(item, empty);
-                if (item == null || empty) {
-                    setGraphic(null);
-                } else {
-                    setText(item.getUf());
-                }
-            }
-        };
-
-    };
-    private Callback<ListView<Municipio>, ListCell<Municipio>> cb_municipio_format = evt ->{
-        return new ListCell<Municipio>() {
-            @Override
-            protected void updateItem(Municipio item, boolean empty) {
-                super.updateItem(item, empty);
-                if (item == null || empty) {
-                    setGraphic(null);
-                } else {
-                    setText(item.getNome());
-                }
-            }
-        };
-
-    };
 
 
     public void salvar(){
@@ -279,5 +214,44 @@ public class EditoraFormularioController implements Initializable {
     public void deletar(){
         editoraDao.deletar(editora.getId());
         listar();
+    }
+
+    public void alteraNome(TableColumn.CellEditEvent<Editora, String> editNome) {
+        editora.setNome(editNome.getNewValue());
+        editoraDao.alterar(editora);
+        listar();
+    }
+
+    public void alteraSite(TableColumn.CellEditEvent<Editora, String> edit_site) {
+        editora.setSite(edit_site.getNewValue());
+        editoraDao.alterar(editora);
+        listar();
+    }
+
+    public void alteraTelefone(TableColumn.CellEditEvent<Editora, String> edit_telefone) {
+        editora.setTelefone(edit_telefone.getNewValue());
+        editoraDao.alterar(editora);
+        listar();
+    }
+
+    public void alteraEndereco(TableColumn.CellEditEvent<Editora, String> edit_endereco) {
+        editora.setEndereco(edit_endereco.getNewValue());
+        editoraDao.alterar(editora);
+        listar();
+    }
+
+    public void alteraBairro(TableColumn.CellEditEvent<Editora, String> edit_bairro) {
+        editora.setBairro(edit_bairro.getNewValue());
+        editoraDao.alterar(editora);
+        listar();
+    }
+
+    public void alteraMunicipio(TableColumn.CellEditEvent<Editora, Municipio> edit_municipio) {
+        editora.setMunicipio(edit_municipio.getNewValue());
+        editoraDao.alterar(editora);
+        listar();
+    }
+
+    public void alteraEstado(TableColumn.CellEditEvent<Editora, Estado> edit_estado) {
     }
 }

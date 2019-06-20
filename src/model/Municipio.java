@@ -5,6 +5,11 @@ public class Municipio {
     private String nome;
     private Estado estado;
 
+    @Override
+    public String toString() {
+        return nome;
+    }
+
     public int getId() {
         return id;
     }

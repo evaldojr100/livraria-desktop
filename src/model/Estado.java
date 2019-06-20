@@ -4,6 +4,11 @@ public class Estado {
     private int id;
     private String uf;
 
+    @Override
+    public String toString() {
+        return uf;
+    }
+
     public int getId() {
         return id;
     }

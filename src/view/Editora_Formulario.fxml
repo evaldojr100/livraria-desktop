@@ -33,13 +33,13 @@
       <TableView fx:id="tabela_editoras" layoutY="285.0" prefHeight="182.0" prefWidth="754.0">
         <columns>
             <TableColumn fx:id="tb_id" minWidth="0.0" prefWidth="31.0" text="ID" />
-            <TableColumn fx:id="tb_nome" prefWidth="133.0" text="Nome" />
-            <TableColumn fx:id="tb_site" prefWidth="41.0" text="Site" />
-            <TableColumn fx:id="tb_telefone" prefWidth="56.0" text="Telefone" />
-            <TableColumn fx:id="tb_endereco" prefWidth="56.0" text="Endereço" />
-            <TableColumn fx:id="tb_bairro" text="Bairro" />
-            <TableColumn fx:id="tb_municipio" text="Municipio" />
-            <TableColumn fx:id="tb_estado" text="Estado" />
+            <TableColumn fx:id="tb_nome" onEditCommit="#alteraNome" prefWidth="133.0" text="Nome" />
+            <TableColumn fx:id="tb_site" onEditCommit="#alteraSite" prefWidth="41.0" text="Site" />
+            <TableColumn fx:id="tb_telefone" onEditCommit="#alteraTelefone" prefWidth="56.0" text="Telefone" />
+            <TableColumn fx:id="tb_endereco" onEditCommit="#alteraEndereco" prefWidth="56.0" text="Endereço" />
+            <TableColumn fx:id="tb_bairro" onEditCommit="#alteraBairro" text="Bairro" />
+            <TableColumn fx:id="tb_municipio" onEditCommit="#alteraMunicipio" text="Municipio" />
+            <TableColumn fx:id="tb_estado" onEditCommit="#alteraEstado" text="Estado" />
 
 
 

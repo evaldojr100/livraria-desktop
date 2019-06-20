@@ -157,7 +157,7 @@ public class MunicipioDAO {
         }
         return municipios;
     }
-    public ObservableList<Municipio> listarEstado (Estado estado){
+    public ObservableList listarEstado (Estado estado){
         conectar();
 
         String sql = "select * from municipio where estado_id=? group by id";

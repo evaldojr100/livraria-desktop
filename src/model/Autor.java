@@ -6,6 +6,11 @@ public class Autor {
     private String nome;
     private String email;
 
+    @Override
+    public String toString() {
+        return nome;
+    }
+
     public int getId() {
         return id;
     }

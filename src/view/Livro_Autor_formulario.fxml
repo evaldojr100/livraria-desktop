@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane prefHeight="374.0" prefWidth="393.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LivroAutorFormularioController">
+   <children>
+      <Pane layoutX="6.0" prefHeight="400.0" prefWidth="441.0">
+         <children>
+            <TableView fx:id="tabela_autor" layoutX="26.0" layoutY="100.0" prefHeight="200.0" prefWidth="397.0">
+              <columns>
+                <TableColumn fx:id="tb_select" prefWidth="50.0" text="Select" />
+                <TableColumn fx:id="tb_autor" prefWidth="346.0" text="Autor" />
+              </columns>
+            </TableView>
+            <Button fx:id="btn_salvar" layoutX="375.0" layoutY="361.0" mnemonicParsing="false" text="Salvar" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

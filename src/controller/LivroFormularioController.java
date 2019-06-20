@@ -86,7 +86,6 @@ public class LivroFormularioController implements Initializable {
     public void popular_editoras() {
         cb_editoras.cellFactoryProperty();
         cb_editoras.setOnMouseClicked(cb_editora_clicked);
-        cb_editoras.setCellFactory(cb_editora_format);
         cb_editoras.setOnAction(mudar_cb_editora);
     }
     public void limpar_campos(){
@@ -213,44 +212,30 @@ public class LivroFormularioController implements Initializable {
         listar_livros();
     }
 
-    private Callback<ListView<Editora>, ListCell<Editora>> cb_editora_format = evt ->{
-        return new ListCell<>() {
-            @Override
-            protected void updateItem(Editora item, boolean empty) {
-                super.updateItem(item, empty);
-                if (item == null || empty) {
-                    setGraphic(null);
-                } else {
-                    setText(item.getNome());
-                }
-            }
-        };
-
-    };
-
-    public void alteraTitulo(TableColumn.CellEditEvent<Livro,String> livroStringCellEditEvent){
-        livro.setTitulo(livroStringCellEditEvent.getNewValue());
+    //Alterar da Tabela
+    public void alteraTitulo(TableColumn.CellEditEvent<Livro,String> edit_titulo){
+        livro.setTitulo(edit_titulo.getNewValue());
         livroDao.alterar(livro);
         listar_livros();
     }
-    public void alteraPreco(TableColumn.CellEditEvent<Livro, Float> livroFloatCellEditEvent) {
-        livro.setPreco(livroFloatCellEditEvent.getNewValue());
+    public void alteraPreco(TableColumn.CellEditEvent<Livro, Float> edit_preco) {
+        livro.setPreco(edit_preco.getNewValue());
         livroDao.alterar(livro);
         listar_livros();
     }
-    public void alteraQuantidade(TableColumn.CellEditEvent<Livro,Integer>livroIntegerCellEditEvent){
-        livro.setQuantidade(livroIntegerCellEditEvent.getNewValue());
+    public void alteraQuantidade(TableColumn.CellEditEvent<Livro,Integer>edit_quuantidade){
+        livro.setQuantidade(edit_quuantidade.getNewValue());
         livroDao.alterar(livro);
         listar_livros();
     }
-    public void alteraData(TableColumn.CellEditEvent<Livro, String> livroStringCellEditEvent) {
+    public void alteraData(TableColumn.CellEditEvent<Livro, String> edit_data) {
         DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        livro.setData_lancamento(LocalDate.parse(livroStringCellEditEvent.getNewValue(),formatador));
+        livro.setData_lancamento(LocalDate.parse(edit_data.getNewValue(),formatador));
         livroDao.alterar(livro);
         listar_livros();
     }
-    public void alteraEditora(TableColumn.CellEditEvent<Livro, Editora> livroEditoraCellEditEvent) {
-        livro.setEditora(livroEditoraCellEditEvent.getNewValue());
+    public void alteraEditora(TableColumn.CellEditEvent<Livro, Editora> edit_editora) {
+        livro.setEditora(edit_editora.getNewValue());
         livroDao.alterar(livro);
         listar_livros();
     }
