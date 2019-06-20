@@ -105,7 +105,7 @@ public class LivroFormularioController implements Initializable {
             tb_titulo.setCellValueFactory(new PropertyValueFactory<>("titulo"));
             tb_preco.setCellValueFactory(new PropertyValueFactory<>("preco"));
             tb_quantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
-            tb_data_lancamento.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getData_lancamento().format(DateTimeFormatter.ofPattern("dd-MM-yy"))));
+            tb_data_lancamento.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getData_lancamento().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
             tb_editora.setCellValueFactory((param) -> new SimpleStringProperty(param.getValue().getEditora().getNome()));
 
 
@@ -244,10 +244,14 @@ public class LivroFormularioController implements Initializable {
         listar_livros();
     }
     public void alteraData(TableColumn.CellEditEvent<Livro, String> livroStringCellEditEvent) {
-        livro.setData_lancamento(LocalDate.parse(livroStringCellEditEvent.getNewValue()));
+        DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        livro.setData_lancamento(LocalDate.parse(livroStringCellEditEvent.getNewValue(),formatador));
         livroDao.alterar(livro);
         listar_livros();
     }
-    public void alteraEditora(TableColumn.CellEditEvent<Livro, String> livroStringCellEditEvent) {
+    public void alteraEditora(TableColumn.CellEditEvent<Livro, Editora> livroEditoraCellEditEvent) {
+        livro.setEditora(livroEditoraCellEditEvent.getNewValue());
+        livroDao.alterar(livro);
+        listar_livros();
     }
 }
