@@ -85,14 +85,12 @@ public class EditoraFormularioController implements Initializable {
     public void popular_estado() {
         cb_estado.cellFactoryProperty();
         cb_estado.setOnMouseClicked(cb_estado_clicked);
-
         cb_estado.setOnAction(mudar_cb_estado);
     }
 
     public void popular_municipio(){
         cb_municipio.cellFactoryProperty();
         cb_municipio.setOnMouseClicked(cb_municipio_clicked);
-
         cb_municipio.setOnAction(mudar_cb_municipio);
 
     }
@@ -188,8 +186,6 @@ public class EditoraFormularioController implements Initializable {
                 System.out.println("Municipio Selecionado:"+municipio.getNome());
     };
 
-
-
     public void salvar(){
             Editora editora = new Editora();
             editora.setNome(txt_nome.getText());
@@ -211,6 +207,7 @@ public class EditoraFormularioController implements Initializable {
 
 
     }
+
     public void deletar(){
         editoraDao.deletar(editora.getId());
         listar();
@@ -253,5 +250,8 @@ public class EditoraFormularioController implements Initializable {
     }
 
     public void alteraEstado(TableColumn.CellEditEvent<Editora, Estado> edit_estado) {
+        editora.setEstado(edit_estado.getNewValue());
+        editoraDao.alterar(editora);
+        listar();
     }
 }
