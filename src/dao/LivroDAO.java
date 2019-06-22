@@ -201,4 +201,23 @@ public class LivroDAO {
         }
     }
 
+    public void linkar_livro_autor(Livro livro, Autor autor){
+        conectar();
+
+        String sql ="insert into livro_autor(livro_id,autor_id) values(?,?)";
+
+        try{
+            PreparedStatement st =  conexao.prepareStatement(sql);
+            st.setInt(1,livro.getId());
+            st.setInt(2,autor.getId());
+
+            st.execute();
+            st.close();
+            conexao.close();
+        }catch (SQLException e ){
+            System.out.println(e);
+            throw new RuntimeException(e);
+        }
+
+    }
 }

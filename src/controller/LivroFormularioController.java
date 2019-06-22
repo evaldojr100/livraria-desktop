@@ -7,17 +7,23 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.ComboBoxListCell;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import javafx.util.converter.FloatStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import model.*;
+
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -26,6 +32,7 @@ import java.util.ResourceBundle;
 import javafx.scene.input.MouseEvent;
 
 public class LivroFormularioController implements Initializable {
+
 
     //Text Fields
     @FXML private TextField txt_id;
@@ -57,6 +64,7 @@ public class LivroFormularioController implements Initializable {
     LivroDAO livroDao = new LivroDAO();
     Editora editora = new Editora();
     Autor autor = new Autor();
+
 
 
     @Override
@@ -139,6 +147,65 @@ public class LivroFormularioController implements Initializable {
         }
 
     }
+    public void add_autores(){
+        if(livro.getId()!=0){
+            try{
+                Stage tela_autor  = new Stage();
+                Parent root = FXMLLoader.load(getClass().getResource("/view/Livro_Autor_formulario.fxml"));
+                tela_autor.setTitle("Adcionar Autores");
+                tela_autor.setScene(new Scene(root, 600,450));
+                tela_autor.show();
+            }catch (IOException e){
+                System.out.println(e);
+                e.printStackTrace();
+            }
+
+        }else{
+            Alert mensagem = new Alert(Alert.AlertType.INFORMATION);
+            mensagem.setTitle("Controle de Livros");
+            mensagem.setHeaderText("Selecione Um livro Primeiro!!");
+            mensagem.showAndWait();
+        }
+    }
+
+
+
+
+    // ao apertar no botão novo cadastro insere um novo item
+    public void salvar() {
+
+        Livro livro = new Livro();
+
+        livro.setTitulo(txt_titulo.getText());
+        livro.setPreco(Float.valueOf(txt_preco.getText()));
+        livro.setQuantidade(Integer.valueOf(txt_quantidade.getText()));
+        DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        livro.setData_lancamento(LocalDate.parse(txt_data_lancamento.getText(),formatador));
+        System.out.println();
+        livro.setEditora(editora);
+
+        livroDao.inserir(livro);
+        txt_id.setText(Integer.toString(livroDao.proximo_id()));
+
+        Alert mensagem = new Alert(Alert.AlertType.INFORMATION);
+        mensagem.setTitle("Cadastro de Livros");
+        mensagem.setHeaderText("Livro Cadastrado com sucesso");
+        mensagem.setContentText("Livro: " + txt_titulo.getText());
+        mensagem.showAndWait();
+        limpar_campos();
+        listar_livros();
+
+    }
+    public void deletar() {
+        livroDao.deletar(livro.getId());
+        Alert mensagem = new Alert(Alert.AlertType.INFORMATION);
+        mensagem.setTitle("Controle de Livros");
+        mensagem.setHeaderText("Livro Deletado com sucesso");
+        mensagem.showAndWait();
+        listar_livros();
+    }
+
+
     //Evento do Mouse para Selecionar Autor na tabela autores
     EventHandler<MouseEvent> autorSelecionado = evt -> {
         autor = (Autor) tabela_autores.getSelectionModel().getSelectedItem();
@@ -177,40 +244,6 @@ public class LivroFormularioController implements Initializable {
         }
     };
 
-    // ao apertar no botão novo cadastro insere um novo item
-    public void salvar() {
-
-            Livro livro = new Livro();
-
-            livro.setTitulo(txt_titulo.getText());
-            livro.setPreco(Float.valueOf(txt_preco.getText()));
-            livro.setQuantidade(Integer.valueOf(txt_quantidade.getText()));
-            DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            livro.setData_lancamento(LocalDate.parse(txt_data_lancamento.getText(),formatador));
-            System.out.println();
-            livro.setEditora(editora);
-
-            livroDao.inserir(livro);
-            txt_id.setText(Integer.toString(livroDao.proximo_id()));
-
-            Alert mensagem = new Alert(Alert.AlertType.INFORMATION);
-            mensagem.setTitle("Cadastro de Livros");
-            mensagem.setHeaderText("Livro Cadastrado com sucesso");
-            mensagem.setContentText("Livro: " + txt_titulo.getText());
-            mensagem.showAndWait();
-            limpar_campos();
-            listar_livros();
-
-        }
-
-    public void deletar() {
-        livroDao.deletar(livro.getId());
-        Alert mensagem = new Alert(Alert.AlertType.INFORMATION);
-        mensagem.setTitle("Controle de Livros");
-        mensagem.setHeaderText("Livro Deletado com sucesso");
-        mensagem.showAndWait();
-        listar_livros();
-    }
 
     //Alterar da Tabela
     public void alteraTitulo(TableColumn.CellEditEvent<Livro,String> edit_titulo){
@@ -239,4 +272,10 @@ public class LivroFormularioController implements Initializable {
         livroDao.alterar(livro);
         listar_livros();
     }
+
+
+    public final Livro getLivro(){
+        return livro;
+    }
+
 }

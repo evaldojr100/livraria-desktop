@@ -52,5 +52,5 @@
        <TableColumn fx:id="tb_autor" prefWidth="142.0" text="Autores" />
      </columns>
    </TableView>
-   <Button layoutX="763.0" layoutY="491.0" mnemonicParsing="false" text="Alterar Autores " />
+   <Button layoutX="763.0" layoutY="491.0" mnemonicParsing="false" onAction="#add_autores" text="Alterar Autores " />
 </AnchorPane>
