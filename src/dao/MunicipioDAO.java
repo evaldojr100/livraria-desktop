@@ -127,7 +127,7 @@ public class MunicipioDAO {
             throw new RuntimeException(e);
         }
     }
-    public List<Municipio> listarTodos(){
+    public ObservableList listarTodos(){
         conectar();
 
         String sql = "select * from autores";
@@ -155,7 +155,8 @@ public class MunicipioDAO {
         }catch (SQLException e){
             throw new RuntimeException(e);
         }
-        return municipios;
+        ObservableList retorno = FXCollections.observableArrayList(municipios);
+        return  retorno;
     }
     public ObservableList listarEstado (Estado estado){
         conectar();
@@ -188,5 +189,22 @@ public class MunicipioDAO {
             throw new RuntimeException(e);
         }
 
+    }
+    public Municipio first_munic(Estado estado){
+        conectar();
+
+        String sql="select id from municipio where estado_id=? limit 1";
+
+        try{
+            PreparedStatement st = conexao.prepareStatement(sql);
+            st.setInt(1,estado.getId());
+
+            ResultSet rs = st.executeQuery();
+            rs.next();
+            return buscar_id(rs.getInt("id"));
+        }catch (SQLException e){
+            System.out.println(e);
+            throw new RuntimeException(e);
+        }
     }
 }

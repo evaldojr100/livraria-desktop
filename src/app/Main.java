@@ -13,7 +13,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/view/Livro_Formulario.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/Livraria_Menu.fxml"));
         primaryStage.setTitle("Livraria Do Gabriel");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();

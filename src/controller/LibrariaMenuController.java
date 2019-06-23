@@ -14,22 +14,41 @@ import java.io.IOException;
 public class LibrariaMenuController {
 
     public void viewEditora(){
-
+        try{
+            Stage tela_autor  = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/view/Editora_Formulario.fxml"));
+            tela_autor.setTitle("Adcionar Autores");
+            tela_autor.setScene(new Scene(root, 850,600));
+            tela_autor.show();
+        }catch (IOException e){
+            System.out.println(e);
+            e.printStackTrace();
+        }
 }
     public void viewLivro(){
-
-    }
-
-    @FXML  public void viewAutor(ActionEvent event) throws Exception {
         try{
-            Stage stage = null;
-            Parent root = FXMLLoader.load(getClass().getResource("/view/autor_formulario.fxml"));
-            Scene scene = new Scene(root, 400, 240);
-            stage.setScene(scene);
-            stage.show();
-        }catch(IOException e){
+            Stage tela_autor  = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/view/Livro_Formulario.fxml"));
+            tela_autor.setTitle("Adcionar Autores");
+            tela_autor.setScene(new Scene(root, 910,600));
+            tela_autor.show();
+        }catch (IOException e){
             System.out.println(e);
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
+
+    public void viewAutor(){
+        try{
+            Stage tela_autor  = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/view/autor_formulario.fxml"));
+            tela_autor.setTitle("Adcionar Autores");
+            tela_autor.setScene(new Scene(root, 600,450));
+            tela_autor.show();
+        }catch (IOException e){
+            System.out.println(e);
+            e.printStackTrace();
+        }
+    }
+
 }

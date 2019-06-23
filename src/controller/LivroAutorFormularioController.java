@@ -30,7 +30,7 @@ public class LivroAutorFormularioController  implements Initializable {
 
 
     Autor autor =  new Autor();
-
+    Livro livro = new Livro();
 
 
     @Override

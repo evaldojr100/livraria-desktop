@@ -3,6 +3,7 @@ package dao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Editora;
+import model.Estado;
 import model.Municipio;
 
 import java.sql.Connection;
@@ -62,6 +63,7 @@ public class EditoraDAO {
             st.setString(5,editora.getTelefone());
             st.setInt(6,editora.getMunicipio().getId());
             st.setInt(7,editora.getId());
+            editora.setEstado(editora.getEstado());
 
             st.execute();
             System.out.println("Dados Alterados com sucesso!");
@@ -185,6 +187,8 @@ public class EditoraDAO {
 
 
     }
+
+
 
 
 

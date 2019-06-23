@@ -4,11 +4,13 @@ import dao.EditoraDAO;
 import dao.EstadoDAO;
 import dao.MunicipioDAO;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.ComboBoxListCell;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -71,6 +73,7 @@ public class EditoraFormularioController implements Initializable {
         config_edit_tabela();
 
 
+
     }
     private void config_edit_tabela(){
         tb_nome.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -78,8 +81,7 @@ public class EditoraFormularioController implements Initializable {
         tb_endereco.setCellFactory(TextFieldTableCell.forTableColumn());
         tb_bairro.setCellFactory(TextFieldTableCell.forTableColumn());
         tb_telefone.setCellFactory(TextFieldTableCell.forTableColumn());
-        tb_municipio.setCellFactory(ComboBoxTableCell.forTableColumn(new MunicipioDAO().listarEstado(estado)));
-        tb_estado.setCellFactory(ComboBoxTableCell.forTableColumn(new EstadoDAO().listarTodos()));
+
 
     }
     public void popular_estado() {
@@ -109,6 +111,7 @@ public class EditoraFormularioController implements Initializable {
             tb_estado.setCellValueFactory((param)-> new SimpleStringProperty(param.getValue().getEstado().getUf()));
 
 
+
             tabela_editoras.setItems(new EditoraDAO().listarTodos());
             tabela_editoras.setOnMouseClicked(editoraSelecionada);
 
@@ -128,8 +131,10 @@ public class EditoraFormularioController implements Initializable {
     EventHandler<MouseEvent> editoraSelecionada = evt -> {
 
         editora = tabela_editoras.getSelectionModel().getSelectedItem();
-        estado=editora.getEstado();
-        municipio=editora.getMunicipio();
+        estado=tabela_editoras.getSelectionModel().getSelectedItem().getEstado();
+        municipio=tabela_editoras.getSelectionModel().getSelectedItem().getMunicipio();
+        tb_municipio.setCellFactory(ComboBoxTableCell.forTableColumn(new MunicipioDAO().listarEstado(estado)));
+        tb_estado.setCellFactory(ComboBoxTableCell.forTableColumn(new EstadoDAO().listarTodos()));
         System.out.println("Selecionado: " + tabela_editoras.getSelectionModel().getSelectedItem().getNome());
     };
     //Ao clicar no Combo Box do estado puxa a lista
@@ -249,8 +254,9 @@ public class EditoraFormularioController implements Initializable {
         listar();
     }
 
-    public void alteraEstado(TableColumn.CellEditEvent<Editora, Estado> edit_estado) {
+    public void alteraEstado(TableColumn.CellEditEvent<Editora,Estado>edit_estado){
         editora.setEstado(edit_estado.getNewValue());
+        editora.setMunicipio(new MunicipioDAO().first_munic(editora.getEstado()));
         editoraDao.alterar(editora);
         listar();
     }
