@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
 <AnchorPane prefHeight="399.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LivroAutorFormularioController">
    <children>
-      <Pane layoutX="6.0" prefHeight="400.0" prefWidth="441.0">
+      <Pane layoutX="6.0" prefHeight="443.0" prefWidth="685.0">
          <children>
-            <TableView fx:id="tabela_autor" layoutX="22.0" layoutY="26.0" prefHeight="315.0" prefWidth="397.0">
+            <TableView fx:id="tabela_autor" layoutX="22.0" layoutY="74.0" prefHeight="315.0" prefWidth="310.0">
               <columns>
                 <TableColumn fx:id="tb_id" prefWidth="50.0" text="ID" />
                 <TableColumn fx:id="tb_autor" prefWidth="346.0" text="Autor" />
               </columns>
             </TableView>
-            <Button layoutX="319.0" layoutY="358.0" mnemonicParsing="false" text="Adicionar Autor" />
-            <Button fx:id="btn_voltar" layoutX="30.0" layoutY="358.0" mnemonicParsing="false" onAction="#fechar_tela" text="Voltar" />
+            <Button layoutX="229.0" layoutY="404.0" mnemonicParsing="false" onAction="#link_livro_autor" text="Adicionar Autor" />
+            <Button fx:id="btn_voltar" layoutX="14.0" layoutY="404.0" mnemonicParsing="false" onAction="#fechar_tela" text="Voltar" />
+            <Label layoutX="14.0" layoutY="26.0" text="Livro:" />
+            <TextField fx:id="txt_livro" layoutX="52.0" layoutY="22.0" prefHeight="25.0" prefWidth="354.0" />
          </children>
       </Pane>
    </children>

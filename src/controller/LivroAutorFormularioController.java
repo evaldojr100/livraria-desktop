@@ -1,41 +1,40 @@
 package controller;
 
-import com.mysql.cj.conf.BooleanProperty;
+
 import dao.AutorDAO;
 import dao.LivroDAO;
+import dao.Livro_AutorDAO;
+import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.Autor;
 import model.Livro;
-
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LivroAutorFormularioController  implements Initializable {
+public class LivroAutorFormularioController implements Initializable {
 
     //instanciando Itens das Tabelas
     @FXML TableView tabela_autor = new TableView();
     @FXML TableColumn<Autor, Integer> tb_id;
     @FXML TableColumn<Autor,String> tb_autor = new TableColumn<>("nome");
     @FXML Button btn_voltar;
+    @FXML TextField txt_livro;
 
 
     Autor autor =  new Autor();
-    Livro livro = new Livro();
+    Livro livro = new Livro_AutorDAO().buscar_temp();
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        txt_livro.setEditable(false);
+        txt_livro.setText(livro.getTitulo());
         tabela_autor.setEditable(true);
         listar();
         System.out.println("Numero:"+livro.getId());
@@ -67,7 +66,6 @@ public class LivroAutorFormularioController  implements Initializable {
     }
     public void link_livro_autor(){
         new LivroDAO().linkar_livro_autor(livro,autor);
-
         Alert mensagem = new Alert(Alert.AlertType.INFORMATION);
         mensagem.setTitle("Cadastro de Livros");
         mensagem.setHeaderText("Autor Adicionado no livro");
@@ -82,6 +80,8 @@ public class LivroAutorFormularioController  implements Initializable {
         autor = (Autor) tabela_autor.getSelectionModel().getSelectedItem();
         System.out.println("Selecionado: " + ((Autor) tabela_autor.getSelectionModel().getSelectedItem()).getNome());
     };
+
+
 }
 
 

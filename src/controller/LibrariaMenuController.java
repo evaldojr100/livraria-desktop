@@ -17,8 +17,8 @@ public class LibrariaMenuController {
         try{
             Stage tela_autor  = new Stage();
             Parent root = FXMLLoader.load(getClass().getResource("/view/Editora_Formulario.fxml"));
-            tela_autor.setTitle("Adcionar Autores");
-            tela_autor.setScene(new Scene(root, 850,600));
+            tela_autor.setTitle("Controle de Editoras");
+            tela_autor.setScene(new Scene(root, 775,600));
             tela_autor.show();
         }catch (IOException e){
             System.out.println(e);
@@ -29,7 +29,7 @@ public class LibrariaMenuController {
         try{
             Stage tela_autor  = new Stage();
             Parent root = FXMLLoader.load(getClass().getResource("/view/Livro_Formulario.fxml"));
-            tela_autor.setTitle("Adcionar Autores");
+            tela_autor.setTitle("Controle de Livros");
             tela_autor.setScene(new Scene(root, 910,600));
             tela_autor.show();
         }catch (IOException e){
@@ -42,8 +42,8 @@ public class LibrariaMenuController {
         try{
             Stage tela_autor  = new Stage();
             Parent root = FXMLLoader.load(getClass().getResource("/view/autor_formulario.fxml"));
-            tela_autor.setTitle("Adcionar Autores");
-            tela_autor.setScene(new Scene(root, 600,450));
+            tela_autor.setTitle("Controlede de Autores");
+            tela_autor.setScene(new Scene(root, 639,412));
             tela_autor.show();
         }catch (IOException e){
             System.out.println(e);

@@ -24,9 +24,9 @@
     <Label layoutX="57.0" layoutY="97.0" text="ID:" />
     <Label layoutX="157.0" layoutY="97.0" text="Titulo do Livro" />
     <Button fx:id="btn_salvar" layoutX="741.0" layoutY="193.0" mnemonicParsing="false" onAction="#salvar" text="Novo Cadastro" />
-    <Button fx:id="btn_deletar" layoutX="812.0" layoutY="561.0" mnemonicParsing="false" onAction="#deletar" text="Deletar Livro" />
-    <Button layoutX="14.0" layoutY="561.0" mnemonicParsing="false" text="Voltar" />
-    <Separator layoutX="14.0" layoutY="231.0" prefHeight="5.0" prefWidth="754.0" />
+    <Button fx:id="btn_deletar" layoutX="636.0" layoutY="193.0" mnemonicParsing="false" onAction="#deletar" text="Deletar Livro" />
+    <Button fx:id="btn_voltar" layoutX="14.0" layoutY="561.0" mnemonicParsing="false" onAction="#voltar" text="Voltar" />
+    <Separator layoutX="14.0" layoutY="234.0" prefHeight="2.0" prefWidth="898.0" />
     <Label layoutX="45.0" layoutY="139.0" text="Data Lançamento:" />
     <Label layoutX="249.0" layoutY="139.0" text="Preço:" />
     <Label layoutX="434.0" layoutY="139.0" text="Quantidade:" />
@@ -47,10 +47,11 @@
    <TextField fx:id="txt_preco" layoutX="285.0" layoutY="135.0" prefHeight="25.0" prefWidth="130.0" />
    <TextField fx:id="txt_quantidade" layoutX="506.0" layoutY="135.0" prefHeight="25.0" prefWidth="77.0" />
    <ComboBox fx:id="cb_editoras" layoutX="678.0" layoutY="135.0" prefWidth="150.0" />
-   <TableView fx:id="tabela_autores" layoutX="722.0" layoutY="252.0" prefHeight="227.0" prefWidth="143.0">
+   <TableView fx:id="tabela_autores" layoutX="697.0" layoutY="252.0" prefHeight="227.0" prefWidth="199.0">
      <columns>
-       <TableColumn fx:id="tb_autor" prefWidth="142.0" text="Autores" />
+       <TableColumn fx:id="tb_autor" prefWidth="198.0" text="Autores" />
      </columns>
    </TableView>
-   <Button layoutX="763.0" layoutY="491.0" mnemonicParsing="false" onAction="#add_autores" text="Alterar Autores " />
+   <Button layoutX="794.0" layoutY="493.0" mnemonicParsing="false" onAction="#add_autores" text="Inserir Autores " />
+   <Button layoutX="697.0" layoutY="493.0" mnemonicParsing="false" onAction="#delete_autor" text="Deletar Autor" />
 </AnchorPane>

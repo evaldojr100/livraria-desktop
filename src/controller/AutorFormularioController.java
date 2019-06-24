@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import model.Autor;
 
 import java.net.URL;
@@ -41,6 +42,7 @@ public class AutorFormularioController implements Initializable {
     @FXML private TableColumn<Autor,Integer> tb_id = new TableColumn<>("id");
     @FXML private TableColumn<Autor,String> tb_nome = new TableColumn<>("nome");
     @FXML private TableColumn<Autor,String> tb_email = new TableColumn<>("email");
+    @FXML private Button btn_voltar;
     Autor autor = new Autor();
     AutorDAO autordao = new AutorDAO();
 
@@ -115,6 +117,10 @@ public class AutorFormularioController implements Initializable {
         txfNome.setText("");
         txfEmail.setText("");
         txfNome.requestFocus();
+    }
+    public void voltar(){
+        Stage stage = (Stage) btn_voltar.getScene().getWindow();
+        stage.close();
     }
 
 

@@ -2,6 +2,8 @@ package controller;
 
 import dao.EditoraDAO;
 import dao.LivroDAO;
+import dao.Livro_AutorDAO;
+import javafx.application.Application;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
@@ -32,7 +34,7 @@ import java.util.ResourceBundle;
 import javafx.scene.input.MouseEvent;
 
 public class LivroFormularioController implements Initializable {
-
+    public Livro livro2;
 
     //Text Fields
     @FXML private TextField txt_id;
@@ -42,7 +44,8 @@ public class LivroFormularioController implements Initializable {
     @FXML private TextField txt_data_lancamento;
 
 
-
+    //Botoes
+    @FXML private Button btn_voltar;
     //Combo Boxes
     @FXML private ComboBox cb_editoras;
 
@@ -63,7 +66,7 @@ public class LivroFormularioController implements Initializable {
     Livro livro = new Livro();
     LivroDAO livroDao = new LivroDAO();
     Editora editora = new Editora();
-    Autor autor = new Autor();
+    public Autor autor = new Autor();
 
 
 
@@ -149,6 +152,7 @@ public class LivroFormularioController implements Initializable {
     }
     public void add_autores(){
         if(livro.getId()!=0){
+            new Livro_AutorDAO().inserir_temp(livro);
             try{
                 Stage tela_autor  = new Stage();
                 Parent root = FXMLLoader.load(getClass().getResource("/view/Livro_Autor_formulario.fxml"));
@@ -167,7 +171,27 @@ public class LivroFormularioController implements Initializable {
             mensagem.showAndWait();
         }
     }
+    public void delete_autor(){
+        if(livro.getId()!=0 && autor.getId()!=0){
+            new Livro_AutorDAO().delete_livro_autor(new Livro_AutorDAO().select_for_delete(livro,autor));
+            listar_autores(livro);
 
+        }else if(livro.getId()!=0 && autor.getId()==0){
+            Alert mensagem = new Alert(Alert.AlertType.INFORMATION);
+            mensagem.setTitle("Controle de Livros");
+            mensagem.setHeaderText("Selecione Um Autor Primeiro Ou Adicione Um!!");
+            mensagem.showAndWait();
+        }else if(livro.getId()==0){
+            Alert mensagem = new Alert(Alert.AlertType.INFORMATION);
+            mensagem.setTitle("Controle de Livros");
+            mensagem.setHeaderText("Selecione Um livro Primeiro!!");
+            mensagem.showAndWait();
+        }
+    }
+    public void voltar(){
+        Stage stage = (Stage) btn_voltar.getScene().getWindow();
+        stage.close();
+    }
 
 
 
@@ -197,6 +221,7 @@ public class LivroFormularioController implements Initializable {
 
     }
     public void deletar() {
+        new Livro_AutorDAO().delete_all_autores(livro);
         livroDao.deletar(livro.getId());
         Alert mensagem = new Alert(Alert.AlertType.INFORMATION);
         mensagem.setTitle("Controle de Livros");
@@ -216,6 +241,7 @@ public class LivroFormularioController implements Initializable {
         livro = (Livro) tabela_livros.getSelectionModel().getSelectedItem();
         System.out.println("Selecionado: " + ((Livro) tabela_livros.getSelectionModel().getSelectedItem()).getTitulo());
         listar_autores(livro);
+        livro2 = livro;
     };
     //Evento que com o Clique do mouse abra a lista de Editoras
     EventHandler<MouseEvent> cb_editora_clicked = evt -> {
@@ -274,8 +300,5 @@ public class LivroFormularioController implements Initializable {
     }
 
 
-    public final Livro getLivro(){
-        return livro;
-    }
 
 }

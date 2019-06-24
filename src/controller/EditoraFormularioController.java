@@ -4,18 +4,15 @@ import dao.EditoraDAO;
 import dao.EstadoDAO;
 import dao.MunicipioDAO;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.ComboBoxListCell;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.StringConverter;
-import model.Autor;
 import model.Editora;
 
 import java.net.URL;
@@ -23,7 +20,6 @@ import java.util.ResourceBundle;
 import javafx.scene.input.MouseEvent;
 import model.Estado;
 import model.Municipio;
-import javafx.util.Callback;
 
 public class EditoraFormularioController implements Initializable {
     // Itens Da TableView
@@ -75,6 +71,7 @@ public class EditoraFormularioController implements Initializable {
 
 
     }
+
     private void config_edit_tabela(){
         tb_nome.setCellFactory(TextFieldTableCell.forTableColumn());
         tb_site.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -84,6 +81,7 @@ public class EditoraFormularioController implements Initializable {
 
 
     }
+
     public void popular_estado() {
         cb_estado.cellFactoryProperty();
         cb_estado.setOnMouseClicked(cb_estado_clicked);
@@ -139,6 +137,7 @@ public class EditoraFormularioController implements Initializable {
     };
     //Ao clicar no Combo Box do estado puxa a lista
     EventHandler<MouseEvent> cb_estado_clicked = evt -> {
+        cb_municipio.setItems(null);
         cb_municipio.setDisable(true);
         System.out.println("\nEntrou Estado");
         System.out.println("Valores retornados:" + new EstadoDAO().listarTodos().size());

@@ -12,11 +12,11 @@
 
 <AnchorPane prefHeight="412.0" prefWidth="639.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AutorFormularioController">
    <children>
-      <Pane prefHeight="44.0" prefWidth="639.0" style="-fx-background-color: #0000A7;">
+      <Pane prefHeight="44.0" prefWidth="639.0" style="-fx-background-color: #1E90FF;">
          <children>
-            <Label layoutX="148.0" layoutY="2.0" text="Cadastro de Autores" textFill="WHITE">
+            <Label layoutX="148.0" layoutY="2.0" text="Cadastro de Autores">
                <font>
-                  <Font name="Lato Semibold Italic" size="36.0" />
+                  <Font name="AR DELANEY" size="37.0" />
                </font>
             </Label>
          </children>
@@ -37,7 +37,7 @@
           <TableColumn fx:id="tb_email" prefWidth="287.0" text="Email do Autor" />
         </columns>
       </TableView>
-      <Button layoutX="531.0" layoutY="363.0" mnemonicParsing="false" onAction="#deletar" text="Deletar Autor" />
-      <Button fx:id="btnBuscar" layoutX="549.0" layoutY="68.0" mnemonicParsing="false" text="Buscar" />
+      <Button layoutX="376.0" layoutY="120.0" mnemonicParsing="false" onAction="#deletar" text="Deletar Autor" />
+      <Button fx:id="btn_voltar" layoutX="14.0" layoutY="373.0" mnemonicParsing="false" onAction="#voltar" text="Voltar" />
    </children>
 </AnchorPane>
